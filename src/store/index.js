@@ -7,13 +7,20 @@ let _api = axios.create({
   baseURL: "//bcw-sandbox.herokuapp.com/api/cars",
   timeout: 3000
 });
+let _jobsApi = axios.create({
+  baseURL: "//bcw-sandbox.herokuapp.com/api/jobs",
+  timeout: 3000
+})
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     cars: [],
-    activeCar: {}
+    jobs: [],
+    activeCar: {},
+    activeJob: {},
+
   },
   mutations: {
     //NOTE first argument of a mutationn is always the state
@@ -29,6 +36,12 @@ export default new Vuex.Store({
     },
     setActiveCar(state, car) {
       state.activeCar = car;
+    },
+    setActiveJob(state, job) {
+      state.activeJob = job
+    },
+    setJobs(state, payload) {
+      state.jobs = payload
     }
   },
   actions: {
@@ -43,11 +56,29 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getJobs({ commit }) {
+      try {
+        let res = await _jobsApi.get("")
+        commit("setJobs", res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
 
     async getCarById({ commit, dispatch }, id) {
       try {
         let res = await _api.get(id);
         commit("setActiveCar", res.data.data); //NOTE the res.data.data is the sandbox api way of providing data
+      } catch (error) {
+        console.error(error);
+        // NOTE Push changes the route to the provided route by name
+        router.push({ name: "Home" });
+      }
+    },
+    async getJobById({ commit, dispatch }, id) {
+      try {
+        let res = await _jobsApi.get(id);
+        commit("setActiveJob", res.data.data); //NOTE the res.data.data is the sandbox api way of providing data
       } catch (error) {
         console.error(error);
         // NOTE Push changes the route to the provided route by name
@@ -80,6 +111,9 @@ export default new Vuex.Store({
     },
     setActiveCar({ commit }, car) {
       commit("setActiveCar", car);
-    }
+    },
+    setActiveJob({ commit }, Job) {
+      commit("setActiveJob", Job);
+    },
   }
 });

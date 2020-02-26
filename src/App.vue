@@ -6,22 +6,23 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{ name: 'Home' }"
+              :to="{ name: 'Cars' }"
               :class="{
-                active: $route.name == 'Home' || $route.name == 'CarDetails'
+                active: $route.name == 'Cars' || $route.name == 'CarDetails'
               }"
-              >Cars</router-link
-            >
+            >Cars</router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Home' }" class="nav-link"
-              >Jorbs</router-link
-            >
+            <router-link
+              :to="{ name: 'Jobs' }"
+              :class="{
+                active: $route.name == 'Jobs' || $route.name == 'JobDetails'
+              }"
+              class="nav-link"
+            >Jorbs</router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Home' }" class="nav-link"
-              >Houses</router-link
-            >
+            <router-link :to="{ name: 'Home' }" class="nav-link">Houses</router-link>
           </li>
         </ul>
       </div>
